@@ -1,7 +1,7 @@
 const map = [
     "CCWWWWWC",
-    "WWWB  WC",
-    "WOS   WC",
+    "WWW   WC",
+    "WOSB  WC",
     "WWW BOWC",
     "WOWWB WC",
     "W W O WW",
@@ -36,6 +36,9 @@ function movePlayer(changeX, changeY) {
     document.getElementById("player").style.top = playerTop + "px";
     document.getElementById("player").style.left = playerLeft + "px";
 }
+function moveBanana(changeX, changeY) {
+    
+}
 
 
 document.addEventListener("keydown", (event) => {
@@ -46,13 +49,17 @@ document.addEventListener("keydown", (event) => {
     let movePlayerRight = map[posY][posX + 1];
     let movePlayerLeft = map[posY][posX - 1];
    
+    let moveBananaUp = map[posY - 2][posX];
+    let moveBananaDown = map[posY + 2][posX];
+    let moveBananaRight = map[posY][posX + 2];
+    let moveBananaLeft = map[posY][posX - 2];
 
     if (keyName === "ArrowUp") {
         if (posY < 9 && posY > 0) {
             if (" SO".includes(movePlayerUp)) {
                 movePlayer(0, -1);
 
-            }
+            } 
         }
     }
     if (keyName === "ArrowDown") {
@@ -67,6 +74,8 @@ document.addEventListener("keydown", (event) => {
         if (posX < 9 && posX >= 0) {
             if (" SO".includes(movePlayerRight)) {
                 movePlayer(1, 0);
+            } else if ("BX".includes(movePlayerRight) && " ".includes(moveBananaRight)) {
+                console.log(moveBananaRight);
             }
         }
     }
@@ -100,8 +109,13 @@ for (let x = 0; x < map.length; x++) {
             column.style.backgroundColor = "red";
             column.style.borderRadius = "50%";
         } else if ("BX".includes(newMap[y])) {
-            column.style.backgroundImage = "url('Banana.jpg')";
-            column.classList.add("Banana");
+            var banana = document.createElement("div");
+            banana.style.backgroundImage = "url('Banana.jpg')";
+            banana.classList.add("Banana", "column");
+            banana.style.position = "absolute";
+            banana.style.left = (y*70) + "px";
+            banana.style.top = (x*70) + "px";
+            row.appendChild(banana);
         } else if (newMap[y] !== "W") {
             column.style.backgroundColor = "green";
 
