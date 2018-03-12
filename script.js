@@ -74,12 +74,12 @@ document.addEventListener("keydown", (event) => {
                 movePlayer(0, -1);
 //checks 2 cells in whatever direction and find the coordinates and puts them together, also checks if theres an empty space after said box //
             } else if ("BX".includes(movePlayerUp)) {
-                let moveBananaUp = map[posY - 2][posX];
-                let moveBananaDown = map[posY + 2][posX];
+                let moveBananaUp = map[posX][posY - 2];
+                let moveBananaDown = map[posX][posY + 2];
                 let moveBananaRight = map[posY][posX + 2];
                 let moveBananaLeft = map[posY][posX - 2];
                 if (" ".includes(moveBananaUp)) {
-                    var bananaId = posX - (posY - 1).toString();
+                    var bananaId = posX + (posY - 1).toString();
                     
                     var bananaDiv = document.getElementById(bananaId);
                     moveBanana(0, -1, bananaDiv);
@@ -116,7 +116,7 @@ document.addEventListener("keydown", (event) => {
                 movePlayer(1, 0);
             } else if ("BX".includes(movePlayerRight)) {
                 let moveBananaUp = map[posY - 2][posX];
-                let moveBananaDown = map[posY + 2][posX];
+                let moveBananaDown = map[posX][posY + 2];
                 let moveBananaRight = map[posY][posX + 2];
                 let moveBananaLeft = map[posY][posX - 2];
                 if (" ".includes(moveBananaRight)) {
