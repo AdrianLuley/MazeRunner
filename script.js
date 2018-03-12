@@ -21,7 +21,7 @@ let posX = 2;
 let posY = 2;
 let playerPos = false;
 const cellSize = 70;
-var crates = []; // array for pushing crates //
+
 
 
 
@@ -41,7 +41,7 @@ function movePlayer(changeX, changeY) {
     document.getElementById("player").style.top = playerTop + "px";
     document.getElementById("player").style.left = playerLeft + "px";
 }
-
+// Moves the Bananana (or boxes"B") //
 function moveBanana(changeX, changeY, banana) {
     
     var coordinates = banana.id.split("")
@@ -69,23 +69,49 @@ document.addEventListener("keydown", (event) => {
 
 
     if (keyName === "ArrowUp") {
-        if (posY < 9 && posY > 0) {
+        if (posY < 8 && posY >= 0) {
             if (" SO".includes(movePlayerUp)) {
                 movePlayer(0, -1);
-
+//checks 2 cells in whatever direction and find the coordinates and puts them together, also checks if theres an empty space after said box //
+            } else if ("BX".includes(movePlayerUp)) {
+                let moveBananaUp = map[posY - 2][posX];
+                let moveBananaDown = map[posY + 2][posX];
+                let moveBananaRight = map[posY][posX + 2];
+                let moveBananaLeft = map[posY][posX - 2];
+                if (" ".includes(moveBananaUp)) {
+                    var bananaId = posX - (posY - 1).toString();
+                    
+                    var bananaDiv = document.getElementById(bananaId);
+                    moveBanana(0, -1, bananaDiv);
+                    movePlayer(0, -1);
+                }
             }
         }
     }
     if (keyName === "ArrowDown") {
 
-        if (posY < 9 && posY > 0) {
+        if (posY < 8 && posY >= 0) {
             if (" SO".includes(movePlayerDown)) {
                 movePlayer(0, 1);
+            } else if ("BX".includes(movePlayerDown)) {
+                let moveBananaUp = map[posY - 2][posX];
+                let moveBananaDown = map[posY + 2][posX];
+                let moveBananaRight = map[posY][posX + 2];
+                let moveBananaLeft = map[posY][posX - 2];
+                if (" ".includes(moveBananaDown)) {
+                    var bananaId = posX + (posY + 1).toString();
+                    
+                    var bananaDiv = document.getElementById(bananaId);
+                    moveBanana(0, 1, bananaDiv);
+                    movePlayer(0, 1);
+                    console.log(moveBananaUp, moveBananaRight, moveBananaDown, moveBananaLeft);
+                }
             }
         }
     }
     if (keyName === "ArrowRight") {
         if (posX < 9 && posX >= 0) {
+            
             if (" SO".includes(movePlayerRight)) {
                 movePlayer(1, 0);
             } else if ("BX".includes(movePlayerRight)) {
@@ -99,6 +125,7 @@ document.addEventListener("keydown", (event) => {
                     var bananaDiv = document.getElementById(bananaId);
                     moveBanana(1, 0, bananaDiv);
                     movePlayer(1, 0);
+                    console.log(moveBananaUp, moveBananaRight, moveBananaDown, moveBananaLeft);
                 }
             }
         }
@@ -122,6 +149,7 @@ document.addEventListener("keydown", (event) => {
             }
         }
     }
+    
 
 })
 // Creates rows the columns and adds bricks as a background for all "W" //
